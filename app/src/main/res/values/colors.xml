@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="conduit_green">#56D847</color>
+    <color name="conduit_green_dark">#32671C</color>
+    <color name="conduit_grey">#53566A</color>
+    <color name="conduit_white">#EAEBEF</color>
+    <color name="transparent">#0053566A</color>
 </resources>
