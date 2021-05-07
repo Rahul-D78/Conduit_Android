@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/auth_navigation"
-    app:startDestination="@id/signUpFragment">
+    app:startDestination="@id/loginFragment">
 
 
     <fragment
@@ -17,12 +17,14 @@
     <action
         android:id="@+id/gotoLoginFragment"
         app:destination="@id/loginFragment"
+        app:popUpTo="@id/auth_navigation"
         app:enterAnim="@anim/nav_default_pop_enter_anim"
         app:exitAnim="@anim/nav_default_pop_exit_anim" />
 
     <action
         android:id="@+id/gotoSignUpFragment"
         app:destination="@id/signUpFragment"
+        app:popUpTo="@id/auth_navigation"
         app:enterAnim="@anim/nav_default_pop_enter_anim"
         app:exitAnim="@anim/nav_default_pop_exit_anim" />
 

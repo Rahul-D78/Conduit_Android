@@ -2,6 +2,7 @@ package com.sih.conduitclone
 
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -13,14 +14,25 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.ViewModelProvider
+import com.sih.conduitclone.databinding.ActivityMainBinding
+import com.sih.conduitclone.ui.auth.AuthViewModel
+import io.realworld.api.models.entities.User
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-
+    private lateinit var authViewModel: AuthViewModel
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+//        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -35,7 +47,27 @@ class MainActivity : AppCompatActivity() {
         ), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        authViewModel.user.observe({lifecycle}) {
+            updateMenu(it)
+            navController.navigateUp()
+            Toast.makeText(this, "Logged In as ${it.username}}", Toast.LENGTH_SHORT).show()
+        }
     }
+
+    private fun updateMenu(user: User?) {
+        when (user) {
+            is User -> {
+                binding.navView.menu.clear()
+                binding.navView.inflateMenu(R.menu.menu_main_user)
+            }
+            else -> {
+
+            }
+        }
+
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
